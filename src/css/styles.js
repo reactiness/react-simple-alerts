@@ -1,4 +1,11 @@
-import * as positionConstants from "../core/constants";
+import { positionConstants, alertConstants } from "../core/constants";
+
+import close from "../assets/x.svg";
+import info from "../assets/info.svg";
+import warning from "../assets/alert-circle.svg";
+import error from "../assets/alert-circle.svg";
+import basic from "../assets/alert-circle.svg";
+import success from "../assets/check-circle.svg";
 
 export const containerStyle = {
   width: "100%",
@@ -54,15 +61,42 @@ export const positionStyle = {
   }
 };
 
+export const alertIcons = {
+  [alertConstants.error]: error,
+  [alertConstants.success]: success,
+  [alertConstants.info]: info,
+  [alertConstants.warning]: warning,
+  [alertConstants.basic]: basic
+};
+
 export const defaultStyle = {
-  verticalAlign: "middle",
-  lineHeight: "35px",
+  lineHeight: "38px",
   fontFamily: "Lato,Helvetica Neue,Arial,Helvetica,sans-serif",
   width: "100%",
-  minHeight: "35px",
+  minHeight: "40px",
   color: "white",
-  border: "1px grey black",
-  zIndex: 50
+  zIndex: 50,
+  display: "flex",
+  justifyContent: "flex-start"
+};
+
+export const iconStyle = {
+  color: "white",
+  display: "flex",
+  width: "40px",
+  textAlign: "center"
+};
+
+export const contentStyle = {
+  paddingLeft: "15px",
+  display: "flex",
+  width: "100%"
+};
+
+export const closeButtonStyle = {
+  color: "white",
+  display: "flex",
+  width: "40px"
 };
 
 export const errorStyle = {
@@ -83,4 +117,12 @@ export const warningStyle = {
 
 export const infoStyle = {
   backgroundColor: "rgba(33, 150, 243, 0.8)"
+};
+
+export const alertStyles = {
+  [alertConstants.error]: errorStyle,
+  [alertConstants.success]: successStyle,
+  [alertConstants.info]: infoStyle,
+  [alertConstants.warning]: warningStyle,
+  [alertConstants.basic]: basicStyle
 };

@@ -15,7 +15,18 @@ export const warning = "warning";
 export const info = "info";
 export const success = "success";
 
-export const alertTypes = [basic, error, warning, info, success];
+export const alertConstants = { basic, error, warning, info, success };
+
+export const positionConstants = {
+  bottom,
+  top,
+  topLeft,
+  topRight,
+  bottomLeft,
+  bottomRight,
+  bottomFull,
+  topFull
+};
 
 export const positions = [
   bottom,
@@ -31,9 +42,9 @@ export const positions = [
 export const defaultAlertArgs = {
   type: info,
   timeout: 5000,
-  align: "center",
   transition: DefaultTransition,
   duration: 500,
   position: bottom,
-  content: "content: define some content"
+  content: "content: define some content",
+  closeButton: true
 };

@@ -1,14 +1,22 @@
 import React, { Component } from "react";
-// import { actions } from './actions';
 import {
   defaultStyle,
-  errorStyle,
-  infoStyle,
-  basicStyle,
-  warningStyle,
-  successStyle,
-  containerStyle
+  containerStyle,
+  alertStyles,
+  iconStyle,
+  closeButtonStyle,
+  contentStyle,
+  alertIcons
 } from "../css/styles";
+
+const createHandlers = (remove, id) => {
+  const handleRemove = () => {
+    remove(id);
+  };
+  return {
+    handleRemove
+  };
+};
 
 export class Alert extends React.Component {
   constructor(props) {
@@ -17,16 +25,11 @@ export class Alert extends React.Component {
       renderChild: true
     };
     this.interval = null;
-    // console.log(this.props.type);
-    // console.log(this.getStyle);
-    this.style = this.getStyle(this.props.type);
+    this.handlers = createHandlers(props.remove, props.id);
   }
 
   componentDidMount() {
-    this.interval = setTimeout(
-      () => this.props.remove(this.props.id),
-      this.props.timeout
-    );
+    this.interval = setTimeout(this.handlers.handleRemove, this.props.timeout);
   }
 
   componentWillUnmount() {
@@ -35,45 +38,37 @@ export class Alert extends React.Component {
     clearInterval(this.interval);
   }
 
-  getStyle(type) {
-    // console.log('asdasdasd', type);
-    switch (type) {
-      case "error":
-        return errorStyle;
-      case "warning":
-        return warningStyle;
-      case "success":
-        return successStyle;
-      case "info":
-        return infoStyle;
-      case "basic":
-        return basicStyle;
-      default:
-        return {};
-    }
-  }
-
-  getOptions(props) {
-    return {
-      textAlign: props.align
-    };
-  }
-
   render() {
-    const { content, type, remove, style, ...props } = this.props;
-    // console.log(this.style);
-    // console.log(type);
-
+    const {
+      content,
+      type,
+      remove,
+      style: transitionStyle,
+      icon,
+      closeButton,
+      id,
+      ...props
+    } = this.props;
     return (
-      <div style={{ ...containerStyle, ...style }} {...props}>
+      <div style={{ ...containerStyle, ...transitionStyle }} {...props}>
         <div
           style={{
             ...defaultStyle,
-            ...this.style,
-            ...this.getOptions(props)
+            ...alertStyles[type]
           }}
         >
-          {content}
+          <div style={iconStyle}>
+            <img
+              src={icon ? alertIcons[icon] : alertIcons[type]}
+              style={{ margin: "0 auto" }}
+            />
+          </div>
+          <div style={contentStyle}>{content}</div>
+          {closeButton && (
+            <div style={closeButtonStyle} onClick={this.handlers.handleRemove}>
+              <img src={close} style={{ margin: "0 auto" }} />
+            </div>
+          )}
         </div>
       </div>
     );
